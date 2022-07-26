@@ -30,7 +30,7 @@ Test this function by hand in the console to get it working, and when you think 
 
 // Write your code here
 function multiply(a, b) { //eslint-disable-line
-  let number = a*b;
+  let number = a * b;
   return [number, `The product of ${a} and ${b} is ${number}.`];
 }
 
@@ -52,12 +52,18 @@ Test this function by hand in the console to get it working, and when you think 
 
 // Write your code here
 function sumAndMultiply(a, b, c) { //eslint-disable-line
-  let sum1 = sum(a, b)[0];
-  let totalSum = sum(sum1, c)[0];
-  let multiply1 = multiply(a, b)[0];
-  let totalMultiply = multiply(multiply1, c)[0];
-
+ 
+  
+  let sumAB = sum(a, b)[0];
+  let totalSum = sum(sumAB, c)[0];
+  let multiplyAB = multiply(a, b)[0];
+  let totalMultiply = multiply(multiplyAB, c)[0];
   return [totalSum, totalMultiply, `${a} and ${b} and ${c} sum to ${totalSum}.`, `The product of ${a} and ${b} and ${c} is ${totalMultiply}.`];
+
+    // This below should work, but it doesn't..
+  // let totalSum = sum(sum(sumAnda, b), c)[0];
+  // let totalMultiply = multiply(multiply(a, b), c)[1];
+  // return [totalSum, totalMultiply, `${a} and ${b} and ${c} sum to ${totalSum}.`, `The product of ${a} and ${b} and ${c} is ${totalMultiply}.`];
 
 }
 
@@ -80,18 +86,26 @@ Test this function by hand in the console to get it working, and when you think 
 let testArray = [2, 3, 4]; //eslint-disable-line
 
 function sumArray(sumArr) { //eslint-disable-line
-  let a = sumArr[0];
-  let b = sumArr[1];
-  let c = sumArr[2];
-  let sum1 = sum(a, b)[0];
-  let totalSum = sum(sum1, c)[0];
-  let arrayString = `${a},${b},${c} was passed in as an array of numbers, and ${totalSum} is their sum.`;
+//----------------------------------------
 
-  return [totalSum, arrayString];
+let sumAB = sum(sumArr[0], sumArr[1])[0];
+let totalSum = sum(sumAB, sumArr[2])[0];
+let sumString = `${sumArr[0]},${sumArr[1]},${sumArr[2]} was passed in as an array of numbers, and ${totalSum} is their sum.`;
+
+//---------------------------------------------
+// let sumCount = 0;
+// for(let i = 0; i < sumArr.length; i++){
+  //   sumCount += sumArr[i];
+  // }
+  // return [sumCount, `${sumArr[0]},${sumArr[1]},${sumArr[2]} was passed in as an array of numbers, and ${sumCount} is their sum.`];
+
+//----------------------------This below should work, but it doesn't...
+  // let sumTotal = sum(sum(sumArr[0], sumArr[1]), sumArr[2])[0];
+  // let sumString = `${sumArr[0]},${sumArr[1]},${sumArr[2]} was passed in as an array of numbers, and ${sumTotal} is their sum.`[0];
+  return [totalSum, sumString];
+
+  // Here is the test for sumArray(); uncomment it to run it
 }
-
-// Here is the test for sumArray(); uncomment it to run it
-
 testSumArray(testArray);
 
 // Once you get the test passing, do an a-c-p cycle and synchronize the code between GitHub and your laptop. Don't forget to create a new branch for your work on the next question!
@@ -108,12 +122,17 @@ Test this function by hand in the console to get it working, and when you think 
 
 // Write your code here
 function multiplyArray(multArr) { //eslint-disable-line
-  let x = multArr[0];
-  let y = multArr[1];
-  let z = multArr[2];
-  let multiply1 = multiply(x, y)[0];
-  let totalMultiply = multiply(multiply1, z)[0];
-  let multiplyString = `The numbers ${x},${y},${z} have a product of ${totalMultiply}.`;
+  // let x = multArr[0];
+  // let y = multArr[1];
+  // let z = multArr[2];
+  // let multiply1 = multiply(x, y)[0];
+  // let totalMultiply = multiply(multiply1, z)[0];
+  // let multiplyString = `The numbers ${x},${y},${z} have a product of ${totalMultiply}.`;
+
+  let multiplyAB = multiply(multArr[0], multArr[1])[0];
+  let totalMultiply = multiply(multiplyAB, multArr[2])[0];
+  let multiplyString = `The numbers ${multArr[0]},${multArr[1]},${multArr[2]} have a product of ${totalMultiply}.`;
+
 
   return [totalMultiply, multiplyString];
 }
@@ -143,21 +162,27 @@ Test this function by hand in the console to get it working, and when you think 
 let testDynamicArray = [1,2,3,4,5]; //eslint-disable-line
 
 function multiplyAnyArray(dynamicArray) { //eslint-disable-line
-  let a = dynamicArray[0];
-  let b = dynamicArray[1];
-  let c = dynamicArray[2];
-  let d = dynamicArray[3];
-  let e = dynamicArray[4];
-  let multiply1 = multiply(a, b)[0];
-  let multiply2 = multiply(c, d)[0];
-  let multiply3 = multiply(multiply1, multiply2)[0];
-  let totalMultiply = multiply(multiply3, e)[0];
-  let productString = `The numbers 1,2,3,4,5 have a product of 120.`;
+  // let a = dynamicArray[0];
+  // let b = dynamicArray[1];
+  // let c = dynamicArray[2];
+  // let d = dynamicArray[3];
+  // let e = dynamicArray[4];
+  // let multiply1 = multiply(a, b)[0];
+  // let multiply2 = multiply(c, d)[0];
+  // let multiply3 = multiply(multiply1, multiply2)[0];
+  // let totalMultiply = multiply(multiply3, e)[0];
+  // let productString = `The numbers 1,2,3,4,5 have a product of 120.`;
 
-  return [totalMultiply, productString];
+  let totalMultiply = 1;
+  for(let i = 0; i < dynamicArray.length; i++) {
+      totalMultiply = multiply(totalMultiply, dynamicArray[i])[0];
+    }
+    let theString = `The numbers ${dynamicArray} have a product of ${totalMultiply}.`;
+    return [totalMultiply, theString];
 }
 
 // Here is the test for multiplyArray(); uncomment it to run it
 testMultiplyAnyArray(testDynamicArray);
 
 // Once you get the test passing, do an a-c-p cycle and synchronize the code between GitHub and your laptop. You're done! Submit the link to the repo following the instructions in Canvas.
+
